@@ -1,0 +1,70 @@
+{
+  "uuid": "PLACEHOLDER-UUID",
+  "id": "jaseci_code_runner",
+  "emoji": "💻",
+  "title": "Jaseci Code Runner",
+  "overviewMarkdown": "# Jaseci Code Runner\n\nThis plugin provides file operations for code files (supporting .py and .jac) via the code executor backend. It allows you to:\n\n- **Read** a file’s source code\n- **Execute** a file and return its output\n- **Create** a new code file\n- **Update** an existing file using a find/replace operation\n- **Delete** a file (moving it to a .trash folder for eventual removal)\n\nUse this plugin to manage code files directly from TypingMind, enabling seamless development workflows.\n",
+  "openaiSpec": {
+    "name": "JaseciCodeRunner",
+    "parameters": {
+      "type": "object",
+      "required": [
+        "operation",
+        "filename"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The code content for file creation (used with 'create' operation)."
+        },
+        "filename": {
+          "type": "string",
+          "description": "The filename to operate on. Must end with '.py' or '.jac'."
+        },
+        "operation": {
+          "enum": [
+            "read",
+            "execute",
+            "create",
+            "update",
+            "delete"
+          ],
+          "type": "string",
+          "description": "The operation to perform."
+        },
+        "findReplaceMessage": {
+          "type": "string",
+          "description": "The find/replace message in the format s<delimiter>find<delimiter>replace<delimiter>flags (required for 'update' operation)."
+        }
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "description": "Any additional data returned (e.g., file contents, execution stdout/stderr, updated content)."
+        },
+        "message": {
+          "type": "string",
+          "description": "A summary message indicating the result of the operation."
+        }
+      }
+    },
+    "description": "Performs file operations on code files (supporting .py and .jac) via the /code/ endpoints. The operation parameter determines which action to perform: 'read' to get the file contents; 'execute' to run the file and capture its output; 'create' to create a new file; 'update' to apply a find/replace update; and 'delete' to move the file to trash."
+  },
+  "userSettings": [
+    {
+      "name": "baseUrl",
+      "type": "text",
+      "label": "Server URL",
+      "required": true,
+      "description": "The URL for the plugin server"
+    }
+  ],
+  "syncedAt": null,
+  "authenticationType": "AUTH_TYPE_NONE",
+  "implementationType": "javascript",
+  "oauthConfig": null,
+  "outputType": "respond_to_ai"
+}
